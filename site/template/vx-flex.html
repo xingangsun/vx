@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' data: 'unsafe-eval' 'unsafe-inline'; frame-src 'self'" />
+    <title>VX-UI</title>
+    <!--
+    <script>
+        (function (baseFontSize, fontscale) {
+            var _baseFontSize = baseFontSize || 100;
+            var _fontscale = fontscale || 1;
+            var win = window;
+            var doc = win.document;
+            var ua = navigator.userAgent;
+            var matches = ua.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i);
+            var UCversion = ua.match(/U3\/((\d+|\.){5,})/i);
+            var isUCHd = UCversion && parseInt(UCversion[1].split('.').join(''), 10) >= 80;
+            var isIos = navigator.appVersion.match(/(iphone|ipad|ipod)/gi);
+            var dpr = win.devicePixelRatio || 1;
+            if (!isIos && !(matches && matches[1] > 534) && !isUCHd) {
+                // 如果非iOS, 非Android4.3以上, 非UC内核, 就不执行高清, dpr设为1;
+                dpr = 1;
+            }
+            var scale = 1 / dpr;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            if (!metaEl) {
+                metaEl = doc.createElement('meta');
+                metaEl.setAttribute('name', 'viewport');
+                doc.head.appendChild(metaEl);
+            }
+            metaEl.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
+            doc.documentElement.style.fontSize = _baseFontSize / 2 * dpr * _fontscale + 'px';
+            window.viewportScale = dpr;
+        })(100, 1);
+    </script>
+    -->
+    <script>
+        (function(i,m){var a=i||100;var j=m||1;var h=window;var l=h.document;var b=navigator.userAgent;var f=b.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i);var d=b.match(/U3\/((\d+|\.){5,})/i);var g=d&&parseInt(d[1].split(".").join(""),10)>=80;var c=navigator.appVersion.match(/(iphone|ipad|ipod)/gi);var k=h.devicePixelRatio||1;if(!c&&!(f&&f[1]>534)&&!g){k=1}var e=1/k;var n=l.querySelector('meta[name="viewport"]');if(!n){n=l.createElement("meta");n.setAttribute("name","viewport");l.head.appendChild(n)}n.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+e+",maximum-scale="+e+",minimum-scale="+e);l.documentElement.style.fontSize=a/2*k*j+"px";window.viewportScale=k})(100,1);
+    </script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>

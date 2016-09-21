@@ -1,0 +1,16 @@
+{
+    "presets": [
+        // https://segmentfault.com/a/1190000005112677
+        // http://www.2ality.com/2015/12/babel6-loose-mode.html
+        ["latest", {"loose": true, "modules": "commonjs"}],
+        "stage-0"
+    ],
+    "plugins": [
+        // http://babeljs.io/docs/plugins/transform-runtime/
+        ["transform-runtime", {
+            "polyfill": true,
+            "regenerator": true
+        }]
+    ],
+    "comments": false
+}
