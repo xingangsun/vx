@@ -2,13 +2,13 @@
 <div class="component-list">
     <list v-for="component of components">
         <template slot="header">{{ component.cls }}</template>
-        <router-link v-if="!item.list" v-for="item of component.list" :to="item.link" @click.native="$emit('link-click', $event)">
+        <router-link v-if="!item.list" v-for="item of component.list" :to="item.link" @click.native="bus.$emit('drawer-open-change', false)">
             <list-item :arrow="true">{{ item.name }}<template slot="extra.brief">{{ item.zhName }}</template></list-item>
         </router-link>
         <list-item v-else>
             <list>
                 <template slot="header">{{ item.name }}</template>
-                <router-link v-for="item2 of item.list" :to="item2.link" @click.native="$emit('link-click', $event)">
+                <router-link v-for="item2 of item.list" :to="item2.link" @click.native="bus.$emit('drawer-open-change', false)">
                     <list-item :arrow="true">{{ item2.name }}<template slot="extra.brief">{{ item2.zhName }}</template></list-item>
                 </router-link>
             </list>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { List, ListItem } from '../components'
+import { List, ListItem } from '../../components'
 
 // 组件配置
 const components = [{
@@ -33,18 +33,18 @@ const components = [{
     list: [{
         name: 'InputItem',
         zhName: '文本输入',
-        link: '/'
+        link: '/input-item/demo'
     }]
 }, {
     cls: 'UI Views',
     list: [{
         name: 'ActionSheet',
         zhName: '动作面板',
-        link: '/'
+        link: '/action-sheet/demo'
     }, {
         name: 'Card',
         zhName: '卡片',
-        link: '/'
+        link: '/card/demo'
     }, {
         name: 'Drawer',
         zhName: '抽屉',
@@ -54,23 +54,23 @@ const components = [{
         list: [{
             name: 'List',
             zhName: '列表',
-            link: '/'
+            link: '/list/demo'
         }, {
             name: 'ListItem',
             zhName: '列表项',
-            link: '/'
+            link: '/list-item/demo'
         }]
     }, {
-        name: 'Model',
+        name: 'Modal',
         zhName: '对话框',
-        link: '/'
+        link: '/modal/demo'
     }]
 }, {
     cls: 'Other',
     list: [{
         name: 'Icon',
         zhName: '图标',
-        link: '/'
+        link: '/icon/demo'
     }]
 }]
 
