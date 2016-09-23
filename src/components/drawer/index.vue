@@ -3,7 +3,7 @@
     <div class="vx-drawer-sidebar">
         <slot name="sidebar"></slot>
     </div>
-    <div class="vx-drawer-overlay" v-if="hasOverlay" @touchstart.prevent="$emit('overlay-click', $event)"></div>
+    <div class="vx-drawer-overlay" v-if="showOverlay" @touchstart.prevent="$emit('overlay-click', $event)"></div>
     <div class="vx-drawer-content">
         <slot></slot>
     </div>
@@ -25,7 +25,7 @@ export default {
             type: Boolean,
             required: true
         },
-        hasOverlay: {
+        showOverlay: {
             type: Boolean,
             default: true
         }
