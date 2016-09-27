@@ -6,9 +6,7 @@
     <div class="vx-input-control">
         <input ref="input" :type="type" :value="value"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly"
-        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur"
-        @keydown="$emit('keydown', $event)" @keypress="$emit('keypress', $event)" @keyup="$emit('keyup', $event)"
-        @click="$emit('click', $event)">
+        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur">
     </div>
     <div class="vx-input-clear" v-if="showClear && !readonly && value" @touchstart="onClearTouchstart"></div>
     <div class="vx-input-extra" v-if="$slots.extra">
@@ -78,7 +76,7 @@ export default {
             this.hasFocus = false
             this.$emit('blur', event)
         },
-        onClearTouchstart (event) { // you cant use click event here
+        onClearTouchstart (event) { // you may cant use click event here
             this.$emit('input', '', event)
         }
     }
@@ -95,6 +93,7 @@ export default {
     height: $list-item-height;
     padding-left: $h-spacing-lg;
     padding-right: $h-spacing-lg;
+    overflow: hidden;
 
     &:after {
         @include border-pseudo();
@@ -171,7 +170,7 @@ export default {
     min-width: 0;
     max-height: $icon-size-sm;
     overflow: hidden;
-    line-height: 1;
+    // line-height: 1;
     color: $color-text-caption;
     font-size: $font-size-subhead;
     margin-left: $h-spacing-sm;

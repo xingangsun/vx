@@ -1,5 +1,5 @@
 <template>
-<i class="vx-if" :class="'if-' + icon">
+<i class="vx-if" :class="'if-' + type">
     <slot></slot>
 </i>
 </template>
@@ -8,7 +8,7 @@
 export default {
     name: 'icon',
     props: {
-        icon: {
+        type: {
             type: String,
             required: true
         }
@@ -22,8 +22,7 @@ export default {
 
 // ICONFONT
 $iconfont-cls-prefix        : vx-if;
-$iconfont-url               : "https://at.alicdn.com/t/font_1457169990_5499172";
-$iconfont-url               : "../../assets/fonts/iconfont";
+$iconfont-url               : "../../assets/fonts/iconfont" !default;
 
 // font-face
 @font-face {

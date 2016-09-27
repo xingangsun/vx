@@ -1,10 +1,10 @@
 <template>
 <div class="vx-drawer" :class="['vx-drawer-' + position, {'vx-drawer-open': isOpen}]">
-    <div class="vx-drawer-sidebar">
+    <div class="vx-drawer-sidebar" ref="sidebar">
         <slot name="sidebar"></slot>
     </div>
     <div class="vx-drawer-overlay" v-if="showOverlay" @touchstart.prevent="$emit('overlay-click', $event)"></div>
-    <div class="vx-drawer-content">
+    <div class="vx-drawer-content" ref="content" :style="styleObjContent">
         <slot></slot>
     </div>
 </div>
@@ -28,7 +28,55 @@ export default {
         showOverlay: {
             type: Boolean,
             default: true
+        },
+        isDock: {
+            type: Boolean,
+            default: false
         }
+    },
+    data () {
+        return {
+            styleObjContent: {} // 内容的样式，dock状态下用
+        }
+    },
+    watch: {
+        isOpen (val, oldVal) {
+            this.setContentStyle(val)
+        }
+    },
+    methods: {
+        setContentStyle (isOpen) { // 设置内容的transform
+            if (!this.isDock) {
+                return
+            }
+            let w, h, translate
+            if (this.$refs.sidebar) {
+                switch (this.position) {
+                    case 'left':
+                        w = isOpen ? getComputedStyle(this.$refs.sidebar, null).getPropertyValue('width') : 0
+                        translate = `translateX(${w})`
+                        break
+                    case 'right':
+                        w = isOpen ? '-' + getComputedStyle(this.$refs.sidebar, null).getPropertyValue('width') : 0
+                        translate = `translateX(${w})`
+                        break
+                    case 'top':
+                        h = isOpen ? getComputedStyle(this.$refs.sidebar, null).getPropertyValue('height') : 0
+                        translate = `translateY(${h})`
+                        break
+                    case 'bottom':
+                        h = isOpen ? '-' + getComputedStyle(this.$refs.sidebar, null).getPropertyValue('height') : 0
+                        translate = `translateY(${h})`
+                        break
+                    default:
+                        translate = 'none'
+                }
+            }
+            this.styleObjContent = { transform: translate }
+        }
+    },
+    mounted () {
+        this.setContentStyle(this.isOpen)
     }
 }
 </script>
@@ -44,6 +92,7 @@ export default {
     bottom: 0;
     overflow: hidden; */
     position: relative;
+    // z-index: 0;
     /* width: 100%;
     height: 100%; */
 }
@@ -68,7 +117,8 @@ export default {
 
     .vx-drawer-left & {
         left: 0;
-        transform: translateX(-100%);
+        // transform: translateX(-100%);
+        transform: translate3d(-100%, 0, 0)
     }
 
     .vx-drawer-right & {
@@ -130,8 +180,14 @@ export default {
 }
 
 .vx-drawer-content {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; */
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    transition: transform .3s ease-out;
 }
 </style>

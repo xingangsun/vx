@@ -41,12 +41,14 @@
     position: absolute;
     z-index: 1;
     content: '';
-    #{$position}: 0;
     @if $position == top or $position == bottom {
+        left: 0;
         width: 100%;
     } @else if $position == left or $position == right {
+        top: 0;
         height: 100%;
     }
+    #{$position}: 0;
     border-#{$position}: $width solid $color;
 }
 

@@ -1,33 +1,39 @@
 <template>
 <div class="app">
-    <drawer :is-open="isDrawerOpen" @overlay-click="isDrawerOpen = false">
+    <!-- 侧栏菜单 -->
+    <drawer :is-open="isSideDrawerOpen" @overlay-click="changeSideDrawerOpen(false)">
         <components slot="sidebar"></components>
-        <router-view></router-view>
-    </drawer> 
+    </drawer>
+    <!-- 页面视图 -->
+    <div class="app-body">
+    <router-view></router-view>
+    </div>
 </div>
 </template>
 
 <script>
-import { Navbar, Icon, Drawer } from '../components'
-
 import Components from './views/components'
 
 export default {
     components: {
-        Navbar,
-        Icon,
-        Drawer,
-
         Components
     },
     data () {
         return {
-            isDrawerOpen: true // 侧栏菜单是否打开
+            isSideDrawerOpen: false // 侧栏菜单是否打开
         }
     },
     created () {
-        this.bus.$on('drawer-open-change', (isOpen) => (this.isDrawerOpen = isOpen))
-        this.bus.$on('drawer-open-toggle', (isOpen) => (this.isDrawerOpen = !this.isDrawerOpen))
+        this.bus.$on('drawer-open-change', this.changeSideDrawerOpen)
+        this.bus.$on('drawer-open-toggle', this.toggleSideDrawerOpen)
+    },
+    methods: {
+        toggleSideDrawerOpen () {
+            this.isSideDrawerOpen = !this.isSideDrawerOpen
+        },
+        changeSideDrawerOpen (isOpen) {
+            this.isSideDrawerOpen = isOpen
+        }
     }
 }
 </script>
@@ -38,6 +44,7 @@ export default {
 
 .app {
     height: 100%;
+    position: relative;
 
     > .vx-drawer {
         height: 100%;

@@ -4,7 +4,7 @@
         <slot name="left"></slot>
     </div>
     <div class="vx-navbar-title">
-        <slot></slot>
+        <slot>{{ title }}</slot>
     </div>
     <div class="vx-navbar-right">
         <slot name="right"></slot>
@@ -19,6 +19,9 @@ export default {
         isLight: {
             type: Boolean,
             default: false
+        },
+        title: {
+            type: String
         }
     }
 }
@@ -47,7 +50,7 @@ export default {
     }
 
     &-title {
-        flex: 2;
+        flex: 2.5;
         // max-width: 50%;
         font-size: $font-size-display-sm;
         text-align: center;

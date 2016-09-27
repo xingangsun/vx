@@ -1,7 +1,7 @@
 <template>
-<div class="demo-index">
-    我是首页内容
-</div>
+<page class="demo-" title="">
+
+</page>
 </template>
 
 <script>

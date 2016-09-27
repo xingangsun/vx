@@ -1,13 +1,13 @@
 <template>
-<div class="vx-list-item" :class="['vx-list-item-' + valign, {'vx-list-item-error': isError}]">
+<div class="vx-list-item" :class="'vx-list-item-' + valign">
     <div class="vx-list-thumb" v-if="$slots.thumb">
         <slot name="thumb"></slot>
     </div>
-    <div class="vx-list-line" :class="{'vx-list-line-multiple': $slots['content.brief'] || $slots['extra'] && $slots['extra.brief']}">
+    <div class="vx-list-line" :class="{'vx-list-line-wrap': isWrap, 'vx-list-line-multiple': $slots['brief'] || $slots['extra'] && $slots['extra.brief']}">
         <div class="vx-list-content">
             <slot></slot>
-            <div class="vx-list-brief" v-if="$slots['content.brief']">
-                <slot name="content.brief"></slot>
+            <div class="vx-list-brief" v-if="$slots['brief']">
+                <slot name="brief"></slot>
             </div>
         </div>
         <div class="vx-list-extra" v-if="$slots['extra'] || $slots['extra.brief']">
@@ -32,7 +32,7 @@ export default {
             },
             default: 'middle'
         },
-        isError: {
+        isWrap: {
             type: Boolean,
             default: false
         },
@@ -50,6 +50,8 @@ export default {
 <style lang="sass">
 @import './site/style/base.scss';
 
+$line-wrap-v-spacing: ($list-item-height - $font-size-heading * $line-height-base) / 2;
+
 .vx-list-item {
     position: relative;
     display: flex;
@@ -60,16 +62,6 @@ export default {
     overflow: hidden;
     align-items: center;
     transition: background-color .2s;
-}
-
-.vx-list-item-error {
-    .vx-list-extra {
-        color: $color-error;
-
-        .vx-list-brief {
-            color: $color-error;
-        }
-    }
 }
 
 .vx-list-thumb {
@@ -86,7 +78,7 @@ export default {
     overflow: hidden;
 
     &:after {
-        @include border-pseudo($position: bottom);
+        @include border-pseudo($position: bottom, $width: 1px);
     }
 
     .vx-list-item-middle & {
@@ -103,8 +95,12 @@ export default {
 }
 
 .vx-list-line-multiple {
-    padding: $v-spacing-lg $h-spacing-lg $v-spacing-lg 0;
+    padding: $line-wrap-v-spacing $h-spacing-lg $line-wrap-v-spacing 0;
     // line-height: 1.2;
+    &.vx-list-line-wrap {
+        padding-top: 0;
+        padding-bottom: 0;
+    } 
 }
 
 .vx-list-content {
@@ -113,6 +109,13 @@ export default {
     color: $color-text-base;
     text-align: left;
     @include ellipsis();
+
+    .vx-list-line-wrap & {
+        white-space: normal;
+        padding-top: $line-wrap-v-spacing;
+        padding-bottom: $line-wrap-v-spacing;
+        line-height: 1.2;
+    }
 }
 
 .vx-list-brief {
@@ -158,6 +161,15 @@ export default {
     &.vx-list-arrow-right {
         visibility: visible;
         transform:  rotate(0deg);
+    }
+
+    $item-margin-v-spacing: ($font-size-heading * $line-height-base - $icon-size-xxs) / 2;
+    .vx-list-item-top & {
+        margin-top: $item-margin-v-spacing;
+    }
+
+    .vx-list-item-bottom & {
+        margin-bottom: $item-margin-v-spacing;
     }
 }
 </style>
