@@ -4,7 +4,7 @@ Navbar(导航栏)
 |名称|类型|默认值|说明|
 |---|---|---|---|
 |isLight|`Boolean`|`false`|是否浅色|
-|title|`String`||标题。也可以使用slot插值|
+|title|`String`|`''`|标题。也可以使用slot插值|
 
 ### <a name="events">Events</a>
 |描述|参数|说明|

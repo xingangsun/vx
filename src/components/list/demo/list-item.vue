@@ -1,5 +1,5 @@
 <template>
-<page class="demo-list-item" title="ListItem(列表项)">
+<page-demo class="demo-list-item" title="ListItem(列表项)">
     <list>
         <template slot="header">基本文本展示</template>
         
@@ -51,17 +51,18 @@
             <span slot="extra">右边辅助内容 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAm0lEQVR4Ae2Whw0DMQwD5Q24gfbfRTslaPlGCGb6vyAe2tdzty1uArAlyz2RMgJLoggsSTUBfUwCSkD49jKCFnhgYegCaZgSIAGlokCHBDk1BR6YspMteHIfRqWbhMc714Y/aMF/Bdgw5mJh5HgmU2u2qITatEAQCEvCe53cp+v3T9ct0E92HH01bcGlBIEVRfDWMGUBU0aQ04I7BEwkp1QhR1sAAAAASUVORK5CYII="></span>
         </list-item>
     </list>
-</page>
+</page-demo>
 </template>
 
 <script>
 export default {
-
+    name: 'demo-list-item'
 }
 </script>
 
 <style lang="sass">
 .demo-list-item {
+    
     img {
         width: 40px;
         height: 40px;

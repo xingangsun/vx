@@ -1,1 +1,2 @@
-export Page from './page'
+export Components from './components'
+export PageDemo from './page-demo'

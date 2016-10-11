@@ -121,8 +121,8 @@ $btn-across-height: 100px;   // 通栏按钮高度
 $btn-primary-bg: $brand-primary;
 $btn-primary-bg-tap: $brand-primary-tap;
 
-$btn-ghost-color: $brand-primary;    // 同时应用于背景、文字颜色、边框色
-$btn-ghost-bg-tap: $brand-primary-tap;
+// $btn-ghost-color: $brand-primary;    // 同时应用于背景、文字颜色、边框色
+// $btn-ghost-bg-tap: $brand-primary-tap;
 
 $btn-link-bg-tap: #ddd;
 $btn-link-font-size: 32px;
@@ -156,6 +156,7 @@ $segmented-control-bg-tap: fade($brand-primary, 0.1);
 $tab-bar-height: 100px;
 
 // search-bar
+$search-bar-bg-color: #ddd;
 $search-bar-input-height: 56px;
 
 // notice-bar

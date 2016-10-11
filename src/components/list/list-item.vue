@@ -27,8 +27,8 @@ export default {
     props: {
         valign: { // vertical align: 'top' | 'middle' | 'bottom'
             type: String,
-            validator (val) {
-                return ['top', 'middle', 'bottom'].indexOf(val) !== -1
+            validator (valign) {
+                return ['top', 'middle', 'bottom'].indexOf(valign) !== -1
             },
             default: 'middle'
         },
@@ -38,8 +38,8 @@ export default {
         },
         arrow: {
             type: [String, Boolean],
-            validator (val) {
-                return typeof val === 'boolean' ? true : ['up', 'down', 'left', 'right'].indexOf(val) !== -1
+            validator (arrow) {
+                return typeof arrow === 'boolean' ? true : ['up', 'down', 'left', 'right'].indexOf(arrow) !== -1
             },
             default: false
         }

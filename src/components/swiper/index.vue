@@ -1,7 +1,7 @@
 <template>
-<page class="demo-" title="">
+<div class="">
 
-</page>
+</div>
 </template>
 
 <script>

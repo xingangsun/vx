@@ -1,9 +1,10 @@
 <template>
-<div class="vx-drawer" :class="['vx-drawer-' + position, {'vx-drawer-open': isOpen}]">
+<div class="vx-drawer" :class="['vx-drawer-' + position, { 'vx-drawer-open': isOpen }]">
     <div class="vx-drawer-sidebar" ref="sidebar">
         <slot name="sidebar"></slot>
     </div>
-    <div class="vx-drawer-overlay" v-if="showOverlay" @touchstart.prevent="$emit('overlay-click', $event)"></div>
+    <div class="vx-drawer-overlay" :class="{ 'vx-drawer-overlay-transparent': !showOverlay }" 
+    @touchstart.prevent="onOverlayTouchstart($event)"></div>
     <div class="vx-drawer-content" ref="content" :style="styleObjContent">
         <slot></slot>
     </div>
@@ -16,8 +17,8 @@ export default {
     props: {
         position: { // 'left'(default), 'right', 'top', 'bottom'
             type: String,
-            validator (val) {
-                return ['left', 'right', 'top', 'bottom'].indexOf(val) !== -1
+            validator (position) {
+                return ['left', 'right', 'top', 'bottom'].indexOf(position) !== -1
             },
             default: 'left'
         },
@@ -45,6 +46,9 @@ export default {
         }
     },
     methods: {
+        onOverlayTouchstart (event) {
+            this.$emit('overlay-click', event)
+        },
         setContentStyle (isOpen) { // 设置内容的transform
             if (!this.isDock) {
                 return
@@ -53,20 +57,20 @@ export default {
             if (this.$refs.sidebar) {
                 switch (this.position) {
                     case 'left':
-                        w = isOpen ? getComputedStyle(this.$refs.sidebar, null).getPropertyValue('width') : 0
-                        translate = `translateX(${w})`
+                        w = isOpen ? this.$refs.sidebar.clientWidth : 0
+                        translate = `translate3d(${w}, 0, 0)`
                         break
                     case 'right':
-                        w = isOpen ? '-' + getComputedStyle(this.$refs.sidebar, null).getPropertyValue('width') : 0
-                        translate = `translateX(${w})`
+                        w = isOpen ? '-' + this.$refs.sidebar.clientWidth : 0
+                        translate = `translate3d(${w}, 0, 0)`
                         break
                     case 'top':
-                        h = isOpen ? getComputedStyle(this.$refs.sidebar, null).getPropertyValue('height') : 0
-                        translate = `translateY(${h})`
+                        h = isOpen ? this.$refs.sidebar.clientHeight : 0
+                        translate = `translate3d(0, ${h}, 0)`
                         break
                     case 'bottom':
-                        h = isOpen ? '-' + getComputedStyle(this.$refs.sidebar, null).getPropertyValue('height') : 0
-                        translate = `translateY(${h})`
+                        h = isOpen ? '-' + this.$refs.sidebar.clientHeight : 0
+                        translate = `translate3d(0, ${h}, 0)`
                         break
                     default:
                         translate = 'none'
@@ -101,7 +105,8 @@ export default {
     position: absolute;
     z-index: 3;
     overflow-y: auto;
-    will-change: transform;
+    // will-change: transform;
+    backface-visibility: hidden;
     transition: transform .3s ease-out;
     background-color: $bg-base;
 
@@ -118,30 +123,35 @@ export default {
     .vx-drawer-left & {
         left: 0;
         // transform: translateX(-100%);
-        transform: translate3d(-100%, 0, 0)
+        transform: translate3d(-100%, 0, 0);
     }
 
     .vx-drawer-right & {
         right: 0;
-        transform: translateX(100%);
+        // transform: translateX(100%);
+        transform: translate3d(100%, 0, 0);
     }
 
     .vx-drawer-top & {
         top: 0;
-        transform: translateY(-100%);
+        // transform: translateY(-100%);
+        transform: translate3d(0, -100%, 0);
     }
 
     .vx-drawer-bottom & {
         bottom: 0;
-        transform: translateY(100%);
+        // transform: translateY(100%);
+        transform: translate3d(0, 100%, 0);
     }
 
     .vx-drawer-left.vx-drawer-open &, .vx-drawer-right.vx-drawer-open & {
-        transform: translateX(0%);
+        // transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 
     .vx-drawer-top.vx-drawer-open &, .vx-drawer-bottom.vx-drawer-open & {
-        transform: translateY(0%);
+        // transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 
     .vx-drawer-left.vx-drawer-open & {
@@ -170,8 +180,13 @@ export default {
     z-index: 2;
     opacity: 0;
     visibility: hidden;
-    transition: opacity .5s ease-out;
+    transition: opacity .3s ease-out .2s;
     background-color: $bg-mask;
+
+    &.vx-drawer-overlay-transparent {
+        transition: none;
+        background-color: transparent;
+    }
 
     .vx-drawer-open & {
         opacity: 1;

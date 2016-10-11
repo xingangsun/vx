@@ -1,5 +1,5 @@
 <template>
-<page class="demo-input-item" title="InputItem(文本输入项)">
+<page-demo class="demo-input-item" title="InputItem(文本输入项)">
     <list>
         <template slot="header">
             标签，标签宽度，无标签，占位文本，类型，默认值，清除按钮，报错样式
@@ -57,11 +57,31 @@
         
         <input-item label="click事件" ref="inputItem" :value="inputItemValue"></input-item>
     </list>
-</page>
+    <!-- 多行文本输入 -->
+    <list>
+        <template slot="header">3行文本输入，清空按钮，报错样式，计数</template>
+
+        <input-item label="简介" v-model="inputItemValue2" :multiline="3"
+        :show-clear="true" :show-error="true" :show-count="true"
+        :maxlength="100"></input-item>
+
+        <template slot="footer">还有其他属性和单行输入相同</template>
+    </list>
+
+    <list>
+        <template slot="header">多行文本输入，自动高度</template>
+        
+        <input-item label="简介" v-model="inputItemValue3" :multiline="1"
+        :show-clear="true" :auto-height="true"></input-item>
+
+        <template slot="footer">多行文本输入和单行文本输入合并为一个组件了</template>
+    </list>
+</page-demo>
 </template>
 
 <script>
 export default {
+    name: 'demo-input-item',
     data () {
         return {
             username: '小亲冈',
@@ -69,7 +89,9 @@ export default {
             password2: '',
             other: '',
 
-            inputItemValue: ''
+            inputItemValue: '',
+            inputItemValue2: '',
+            inputItemValue3: ''
         }
     },
     mounted () {
@@ -87,6 +109,7 @@ export default {
 
 <style lang="sass">
 .demo-input-item {
+    
     img {
         width: 40px;
         height: 40px;

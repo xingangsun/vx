@@ -22,7 +22,8 @@ export default {
 @import './site/style/base.scss';
 
 .vx-list {
-    
+    width: 100%;
+    // height: 100%;
 }
 
 .vx-list-header {

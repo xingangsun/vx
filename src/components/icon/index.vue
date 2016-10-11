@@ -39,7 +39,7 @@ $iconfont-url               : "../../assets/fonts/iconfont" !default;
     font-style: normal;
     text-transform: none;
     text-rendering: auto;
-    line-height: 1; // 只是为了保证默认占用的是正方形空间
+    // line-height: 1; // 只是为了保证默认占用的是正方形空间
     // -webkit-font-smoothing: antialiased;
     -webkit-font-smoothing: auto;
 

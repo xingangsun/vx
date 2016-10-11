@@ -1,5 +1,5 @@
 <template>
-<page class="demo-drawer" title="Drawer(抽屉)">
+<page-demo class="demo-drawer" title="Drawer(抽屉)">
     <navbar :is-light="true" title="基本">
         <icon slot="left" type="ellipsis" @touchstart.native="isOpen = !isOpen"></icon>
         <template slot="right">状态：{{ isOpen ? '开' : '关'}}</template>
@@ -28,11 +28,12 @@
         </drawer>
     </div>
     
-</page>
+</page-demo>
 </template>
 
 <script>
 export default {
+    name: 'demo-drawer',
     data () {
         return {
             isOpen: true
@@ -43,9 +44,11 @@ export default {
 
 <style lang="sass">
 .demo-drawer {
+    
     .vx-drawer {
         height: 350px;
     }
+
     .vx-drawer-content {
         display: flex;
         justify-content: center;

@@ -15,10 +15,10 @@ for (const k in demoComponents) {
 }
 
 // 暂时用event-bus进行跨组件通信，大型项目请考虑用vuex
-const bus = new Vue()
+const eventBus = new Vue()
 Vue.mixin({
     beforeCreate () {
-        this.bus = bus
+        this.eventBus = eventBus
     }
 })
 

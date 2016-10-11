@@ -11,15 +11,16 @@ const server = (done) => {
     let webpackComplier = webpack(webpackConfig),
         hotMiddleware = webpackHotMiddleware(webpackComplier),
         devMiddleware = webpackDevMiddleware(webpackComplier, {
-            noInfo: false,
             publicPath: webpackConfig.output.publicPath,
+            noInfo: false,
             stats: {
                 colors: true,
                 hash: false,
                 version: false,
                 timings: false,
                 assets: true,
-                chunks: false
+                chunks: false,
+                children: false
             }
         }),
 

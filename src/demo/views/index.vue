@@ -1,5 +1,5 @@
 <template>
-<page class="demo-index" :show-back="false">
+<page-demo class="demo-index" :show-back="false">
     <template slot="title">首页</template>
     <pre>
         都说城市套路深，不如回农村。
@@ -7,16 +7,12 @@
 
         路漫漫其修远兮，吾将上下而求索。
     </pre>
-</page>
+</page-demo>
 </template>
 
 <script>
-import { Page } from '../components'
-
 export default {
-    components: {
-        Page
-    }
+    name: 'demo-index'
 }
 </script>
 

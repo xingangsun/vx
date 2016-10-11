@@ -157,10 +157,14 @@ button, input, optgroup, select, textarea {
     color: inherit;
     margin: 0;
     outline: none;
+    border: none;
 }
 
 textarea {
     overflow: auto;
+    resize: none;
+    vertical-align: middle;
+    text-align: justify;
 }
 
 /* input {

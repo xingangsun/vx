@@ -7,6 +7,6 @@ Vue.use(VueRouter)
 
 export default new VueRouter({
     mode: 'hash',
-    base: __dirname,
+    // base: __dirname,
     routes
 })
