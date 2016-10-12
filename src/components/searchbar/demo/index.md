@@ -19,6 +19,7 @@ Searchbar(搜索栏)
 |`vm.$emit('focus', event)`|<li>`event`事件对象|输入框获焦时触发|
 |`vm.$emit('blur', event)`|<li>`event`事件对象|输入框失焦时触发|
 |`vm.$emit('click', event)`|<li>`event`事件对象|点击搜索按钮是触发|
+|`vm.$emit('input-click', event)`|<li>`event`事件对象|输入框被点击时触发|
 
 ### <a name="slots">Slots</a>
 |名称|说明|

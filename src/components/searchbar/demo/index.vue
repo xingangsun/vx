@@ -9,7 +9,7 @@
         <template slot="header">定制按钮文本</template>
         
         <searchbar v-model="keyword" placeholder="请输入关键字" :show-clear="true" @click="onSearch">
-            <template slot="btn">搜索</template>
+            <template slot="btn">搜索一下</template>
         </searchbar>
     </list>
     <list>

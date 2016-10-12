@@ -63,7 +63,7 @@
 
         <input-item label="简介" v-model="inputItemValue2" :multiline="3"
         :show-clear="true" :show-error="true" :show-count="true"
-        :maxlength="100"></input-item>
+        :maxlength="100" placeholder="请输入简介"></input-item>
 
         <template slot="footer">还有其他属性和单行输入相同</template>
     </list>
@@ -72,7 +72,7 @@
         <template slot="header">多行文本输入，自动高度</template>
         
         <input-item label="简介" v-model="inputItemValue3" :multiline="1"
-        :show-clear="true" :auto-height="true"></input-item>
+        :show-clear="true" :auto-height="true" placeholder="请输入简介"></input-item>
 
         <template slot="footer">多行文本输入和单行文本输入合并为一个组件了</template>
     </list>

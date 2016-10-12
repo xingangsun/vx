@@ -7,14 +7,14 @@
     <div class="vx-input-control">
         <textarea v-if="multiline" ref="input" :rows="multiline===true ? 1 : multiline" :value="value"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly" :maxlength="maxlength"
-        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click="onClick"></textarea>
+        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick"></textarea>
         <input v-else ref="input" :type="type" :value="value" :maxlength="maxlength"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly"
-        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click="onClick">
+        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick">
     </div>
     <div class="vx-input-clear" v-if="showClear && !readonly && value" @touchstart="onClearTouchstart"></div>
     <div class="vx-input-extra" v-if="multiline && showCount && maxlength>0 || $slots.extra">
-        <slot name="extra"><span>{{ value.replace(/\n/g, '  ').length }}</span>/{{ maxlength }}</slot>
+        <slot name="extra"><span>{{ value.replace(/\n/g, '12').length }}</span>/{{ maxlength }}</slot>
     </div>
     <div class="vx-input-error-extra" v-if="showError"></div>
 </div>
@@ -91,12 +91,19 @@ export default {
     },
     methods: {
         onInput (event) {
+            const value = event.target.value
+            // 修改在iOS下，当输入字符数为maxlength-1时，仍可以输入回车字符。一个换行符\n是两个字符(\r\n)
+            if (this.maxlength >= 1 && value.replace(/\n/g, '12').length > this.maxlength && value.charAt(this.maxlength - 1) === '\n') {
+                event.target.value = value.substring(0, this.maxlength - 1)
+            }
+
+            this.$emit('input', event.target.value, event)
             if (this.multiline && this.autoHeight) {
                 const textarea = this.$refs.input
                 textarea.style.height = 'auto'
-                textarea.style.height = textarea.scrollHeight + 'px'
+                textarea.style.height = (textarea.scrollTop + textarea.scrollHeight) + 'px'
+                textarea.scrollIntoViewIfNeeded ? textarea.scrollIntoViewIfNeeded() : textarea.scrollIntoView(false)
             }
-            this.$emit('input', event.target.value, event)
         },
         onChange (event) {
             this.$emit('change', event.target.value, event)
@@ -115,7 +122,7 @@ export default {
         onClick (event) {
             setTimeout(() => { // scroll to visible
                 event.target.scrollIntoViewIfNeeded ? event.target.scrollIntoViewIfNeeded() : event.target.scrollIntoView(false)
-            }, 300)
+            }, 500)
             this.$emit('click', event)
         }
     }
@@ -173,6 +180,8 @@ export default {
         font-size: $font-size-heading;
         color: $color-text-base;
         background-color: transparent;
+        // height: $font-size-heading * $line-height-base;
+        line-height: $font-size-heading * $line-height-base;
 
         &:disabled {
             color: $color-text-disabled;

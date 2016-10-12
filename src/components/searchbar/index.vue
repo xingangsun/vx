@@ -3,7 +3,7 @@
     <div class="vx-searchbar-input">
         <input ref="search" class="vx-searchbar-val" type="search" :value="value"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly" :maxlength="maxlength"
-        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur">
+        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick">
         <div class="vx-searchbar-clear" v-if="showClear && !readonly && value" @touchstart="onClearTouchstart"></div>
     </div>
     <div class="vx-searchbar-btn" @click="onBtnClick($event)">
@@ -73,6 +73,12 @@ export default {
         },
         onBtnClick (event) {
             this.$emit('click', event)
+        },
+        onClick (event) {
+            setTimeout(() => { // scroll to visible
+                event.target.scrollIntoViewIfNeeded ? event.target.scrollIntoViewIfNeeded() : event.target.scrollIntoView(false)
+            }, 500)
+            this.$emit('input-click', event)
         }
     }
 }
@@ -100,6 +106,7 @@ export default {
 .vx-searchbar-val {
     width: 100%;
     height: $search-bar-input-height;
+    line-height: $search-bar-input-height;
     border-radius: $radius-sm;
     padding-left: $h-spacing-lg + $icon-size-xxs + $h-spacing-sm;
     padding-right: $h-spacing-lg + $icon-size-xxs + $h-spacing-sm;
@@ -148,12 +155,14 @@ export default {
     margin-right: -150%;
     transform: translate3d(100%, 0, 0);
     transition: all .2s;
+    // width: 0;
 
     .vx-searchbar-focus & {
         opacity: 1;
         margin-left: $h-spacing-md;
         margin-right: 0;
         transform: translate3d(0, 0, 0);
+        // width: auto;
     }
 }
 </style>
