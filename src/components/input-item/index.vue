@@ -98,12 +98,7 @@ export default {
             }
 
             this.$emit('input', event.target.value, event)
-            if (this.multiline && this.autoHeight) {
-                const textarea = this.$refs.input
-                textarea.style.height = 'auto'
-                textarea.style.height = (textarea.scrollTop + textarea.scrollHeight) + 'px'
-                textarea.scrollIntoViewIfNeeded ? textarea.scrollIntoViewIfNeeded() : textarea.scrollIntoView(false)
-            }
+            this.resetHeight()
         },
         onChange (event) {
             this.$emit('change', event.target.value, event)
@@ -117,7 +112,17 @@ export default {
             this.$emit('blur', event)
         },
         onClearTouchstart (event) { // you may cant use click event here
+            this.$refs.input.value = ''
             this.$emit('input', '', event)
+            this.resetHeight()
+        },
+        resetHeight () {
+            if (this.multiline && this.autoHeight) {
+                const textarea = this.$refs.input
+                textarea.style.height = 'auto'
+                textarea.style.height = (textarea.scrollTop + textarea.scrollHeight) + 'px'
+                textarea.scrollIntoViewIfNeeded ? textarea.scrollIntoViewIfNeeded() : textarea.scrollIntoView(false)
+            }
         },
         onClick (event) {
             setTimeout(() => { // scroll to visible
