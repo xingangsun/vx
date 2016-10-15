@@ -1,9 +1,9 @@
 <template>
 <page class="page-demo">
     <navbar slot="header">
-        <icon v-if="showBack" slot="left" type="left" @touchstart.native="back"> 返回</icon>
+        <icon v-if="showBack" slot="left" type="left" @click.native="back"> 返回</icon>
         <span><slot name="title">{{ title }}</slot></span>
-        <icon slot="right" type="bars" @touchstart.native="eventBus.$emit('drawer-open-toggle')"></icon>
+        <icon slot="right" type="bars" @click.native="eventBus.$emit('drawer-open-toggle')"></icon>
     </navbar>
     <slot></slot>
 </page>

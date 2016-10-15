@@ -73,8 +73,8 @@ export default {
         // visibility: hidden;
         // display: none;
         // transform: translateX(-100%);
-        backface-visibility: hidden;
         transform: translate3d(-100%, 0, 0); //  high-performance toggle-show
+        backface-visibility: hidden;
         // will-change: transform;
 
         &.active {
