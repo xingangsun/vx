@@ -6,7 +6,7 @@
             <span>详情页</span>
             <icon slot="right" type="plus"></icon> 
         </navbar>
-        <search-bar slot="subheader">搜索栏</search-bar>
+        <searchbar slot="subheader" v-model="keyword" placeholder="请输入关键字" :show-clear="true" btn="取消"></searchbar>
         <list>
             <list-item v-for="n of 100">列表项目{{ n }}</list-item>
         </list>
@@ -17,7 +17,12 @@
 
 <script>
 export default {
-    name: 'demo-page'
+    name: 'demo-page',
+    data () {
+        return {
+            keyword: ''
+        }
+    }
 }
 </script>
 
