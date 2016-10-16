@@ -52,10 +52,6 @@ export default {
         }, {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'monkey-hot'
-        }, {
-            test: /\.js$/,
-            exclude: /node_modules/,
             loader: 'babel'
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
