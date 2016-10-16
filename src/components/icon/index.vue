@@ -17,22 +17,7 @@ export default {
 </script>
 
 <style lang="sass">
-/* 全局iconfont，只引入一次 */
-@import '../../assets/fonts/iconfont.scss';
-
-// ICONFONT
-$iconfont-cls-prefix        : vx-if;
-$iconfont-url               : "../../assets/fonts/iconfont" !default;
-
-// font-face
-@font-face {
-    font-family: 'iconfont';
-    // src: url('#{$iconfont-url}.eot'); /* IE9*/
-    src: //url('#{$iconfont-url}.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-        url('#{$iconfont-url}.woff') format('woff'), /* chrome、firefox */
-        url('#{$iconfont-url}.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-        url('#{$iconfont-url}.svg#iconfont') format('svg'); /* iOS 4.1- */
-}
+@import './site/style/base.scss';
 
 .#{$iconfont-cls-prefix} {
     display: inline-block;

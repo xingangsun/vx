@@ -52,14 +52,15 @@ export default {
 
 <style lang="sass">
  @import './site/style/global.scss'; // 全局样式，只引入一次
+ @import './src/assets/fonts/iconfont.scss'; // 全局样式，只引入一次
  @import './site/style/base.scss';
 
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     background-color: #F5F5F5;
-    /* width: 0;
-    display: none; */
+    width: 0;
+    display: none;
 }
 
 /* ::-webkit-scrollbar:window-inactive {
