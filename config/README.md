@@ -1,0 +1,1 @@
+仿照sample.js文件创建一个mine.js文件覆盖sample中的配置

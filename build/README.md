@@ -1,1 +1,0 @@
-仿照config/sample.js文件创建一个config/index.js文件改为你的配置

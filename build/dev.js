@@ -5,7 +5,7 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
-import config from './config'
+import config from '../config'
 import webpackConfig from './webpack.config.dev.babel'
 
 const webpackCompiler = webpack(webpackConfig)
@@ -35,5 +35,5 @@ devServer.use(hotMiddleware)
 devServer.listen(config.devServerPort, function () {
     process.stdout.clearLine()
     process.stdout.cursorTo(0)
-    console.log(`dev-server at http://${ip.address()}:${this.address().port}\n`)
+    console.log(`dev-server at http://${ip.address()}:${this.address().port}`)
 })

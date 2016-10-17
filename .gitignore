@@ -4,4 +4,4 @@ node_modules/
 api/
 dist/
 www/
-build/config/index.js
+config/mine.js
