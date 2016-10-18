@@ -18,6 +18,14 @@
 <script>
 export default {
     name: 'demo-btn',
+    beforeRouteLeave (to, from, next) {
+        console.log(to, from)
+        if (confirm('离开？')) {
+            next()
+        } else {
+            this.$router.go(1)
+        }
+    },
     data () {
         return {
             loading: false
