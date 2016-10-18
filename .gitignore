@@ -1,7 +1,9 @@
 .DS_Store
 npm-debug.log
 node_modules/
-api/
 dist/
 www/
 config/mine.js
+backend/api/*.*
+backend/img/*.*
+ 
