@@ -4,6 +4,5 @@ node_modules/
 dist/
 www/
 config/mine.js
-backend/api/*.*
-backend/img/*.*
- 
+bkd/api/test/*.*
+bkd/img/test/*.*

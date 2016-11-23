@@ -100,7 +100,7 @@ export default {
             summary: false,
             summaryContent: false,
             customSummary (buildTime) {
-                process.stdout.write(`built in ${buildTime}`)
+                process.stdout.write(`=====[ built in ${buildTime} ]=====`)
             }
         }),
 

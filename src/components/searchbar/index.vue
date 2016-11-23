@@ -55,7 +55,9 @@ export default {
     },
     methods: {
         onInput (event) {
-            this.$emit('input', event.target.value, event)
+            this.$nextTick(function () {
+                this.$emit('input', event.target.value, event)
+            })
         },
         onChange (event) {
             this.$emit('change', event.target.value, event)
@@ -106,7 +108,7 @@ export default {
 .vx-searchbar-val {
     width: 100%;
     height: $search-bar-input-height;
-    line-height: $search-bar-input-height;
+    line-height: normal;
     border-radius: $radius-sm;
     padding-left: $h-spacing-lg + $icon-size-xxs + $h-spacing-sm;
     padding-right: $h-spacing-lg + $icon-size-xxs + $h-spacing-sm;
@@ -120,6 +122,7 @@ export default {
 
     &::-webkit-input-placeholder {
         font-size: $font-size-caption-sm;
+        line-height: $line-height-base;
         color: $color-text-placeholder;
     }
 

@@ -1,4 +1,4 @@
-// 支付宝钱包默认主题
+// 默认主题
 // https://github.com/ant-design/ant-design-mobile/wiki/设计变量表及命名规范
 
 // 全局/品牌色
@@ -154,6 +154,10 @@ $tabs-font-size-heading: 30px;
 $segmented-control-color: $brand-primary;  // 同时应用于背景、文字颜色、边框色
 $segmented-control-height: 54px;
 $segmented-control-bg-tap: fade($brand-primary, 0.1);
+
+// swiper
+$swiper-pagination-bullet-size: 16px;
+$swiper-pagination-bullet-marign: 10px;
 
 // tab-bar
 $tab-bar-height: 100px;

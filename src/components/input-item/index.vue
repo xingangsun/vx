@@ -7,14 +7,15 @@
     <div class="vx-input-control">
         <textarea v-if="multiline" ref="input" :rows="multiline===true ? 1 : multiline" :value="value"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly" :maxlength="maxlength"
-        @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick"></textarea>
+        @input="onInput" @compositionstart="onCompositionstart" @compositionend="onCompositionend"
+        @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick"></textarea>
         <input v-else ref="input" :type="type" :value="value" :maxlength="maxlength"
         :placeholder="placeholder" :disabled="disabled" :readonly="readonly"
         @input="onInput" @change="onChange" @focus="onFocus" @blur="onBlur" @click.self="onClick">
     </div>
     <div class="vx-input-clear" v-if="showClear && !readonly && value" @touchstart="onClearTouchstart"></div>
     <div class="vx-input-extra" v-if="multiline && showCount && maxlength>0 || $slots.extra">
-        <slot name="extra"><span>{{ value.replace(/\n/g, '12').length }}</span>/{{ maxlength }}</slot>
+        <slot name="extra"><span>{{ len }}</span>/{{ maxlength }}</slot>
     </div>
     <div class="vx-input-error-extra" v-if="showError"></div>
 </div>
@@ -86,19 +87,56 @@ export default {
     },
     data () {
         return {
-            hasFocus: false // 是否已经获得焦点
+            hasFocus: false, // 是否已经获得焦点
+            len: 0, // 当前输入字符数
+            isComposition: false // 是否在合成模式(一般指中文输入法模式)下输入
         }
     },
     methods: {
-        onInput (event) {
-            const value = event.target.value
-            // 修改在iOS下，当输入字符数为maxlength-1时，仍可以输入回车字符。一个换行符\n是两个字符(\r\n)
-            if (this.maxlength >= 1 && value.replace(/\n/g, '12').length > this.maxlength && value.charAt(this.maxlength - 1) === '\n') {
-                event.target.value = value.substring(0, this.maxlength - 1)
+        getLenVal (value) {
+            const maxlength = this.maxlength
+            let len = 0
+            let rlen = 0
+            let val = ''
+            for (const ch of value) { // 因为它会正确识别32位的UTF-16字符
+                // maxlength 认为一个回车是两个字符
+                if (ch === '\n') {
+                    ++len
+                    ++rlen
+                }
+                if (++len > maxlength) {
+                    continue
+                }
+                val += ch
+            }
+            // 禁止最后一个字符输入'\n'，否则换行后，用户再次输入会导致问题
+            if (len === maxlength && val.charAt(len - rlen - 1) === '\n') {
+                val = val.substring(0, len - rlen - 1)
+                len -= 2
+            } else if (len === maxlength + 1 && isNaN(val.charCodeAt(maxlength - 1))) {
+                val = val.substring(0, maxlength - 1)
+                len -= 2
             }
 
-            this.$emit('input', event.target.value, event)
+            return { len, val }
+        },
+        onInput (event) {
+            const { len, val } = this.getLenVal(event.target.value)
+            if (this.maxlength >= 1 && !this.isComposition) {
+                event.target.value = val
+            }
+
+            this.$nextTick(function () { // nextTick: 修复ios在删除最后一个字符后光标停留在第一个字符后的位置
+                this.len = len
+                this.$emit('input', event.target.value, event)
+            })
             this.resetHeight()
+        },
+        onCompositionstart (event) {
+            this.isComposition = true
+        },
+        onCompositionend (event) {
+            this.isComposition = false
         },
         onChange (event) {
             this.$emit('change', event.target.value, event)

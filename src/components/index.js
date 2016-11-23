@@ -7,6 +7,7 @@ import Tabbar from './tabbar'
 import Btn from './btn'
 import InputItem from './input-item'
 import Pull from './pull'
+import { Swiper, SwiperSlide } from './swiper'
 
 /* UI Views */
 import Drawer from './drawer'
@@ -25,6 +26,8 @@ export {
     Btn,
     InputItem,
     Pull,
+    Swiper,
+    SwiperSlide,
 
     Drawer,
     List,

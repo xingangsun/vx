@@ -1,10 +1,12 @@
 <template>
 <div class="vx-pull" :class="['vx-pull-' + status, { 'vx-pull-touching': isTouching, 
 'vx-pull-infinite-loading': isInfiniteLoading }]" 
-@touchstart="onTouchstart($event)"
-@touchmove="throttle(onTouchmove, 30, $event)"
-@touchend="_events.refresh ? onTouchend($event) : undefined"
-@scroll="_events.infinite ? throttle(onScroll, 100, $event) : undefined">
+@touchstart="_onTouchstart($event)"
+@touchmove="_onTouchmove($event)"
+@touchend="_events.refresh ? _onTouchend($event) : undefined"
+@scroll="_events.infinite ? _onScroll($event) : undefined">
+<!-- @touchmove.stop="_throttle(_onTouchmove, 30, $event)" -->
+<!-- @scroll.stop="_events.infinite ? _throttle(_onScroll, 30, $event) : undefined"> -->
     <div ref="inner" class="vx-pull-inner" 
     :style="{ transform: 'translate3d(0, ' + translateY + 'px, 0)' }">
     <!-- :style="{ top: translateY + 'px' }"> -->
@@ -34,11 +36,15 @@
 export default {
     name: 'pull',
     props: {
+        touchAngle: {
+            type: Number,
+            default: 45
+        },
         touchTranslate: {
             type: Function,
             default: function (startTouch, endTouch) {
-                // return Math.pow(endTouch.clientY - startTouch.clientY, 0.8)
-                return Math.round((endTouch.clientY - startTouch.clientY) * 0.35)
+                // return Math.pow(endTouch.pageY - startTouch.pageY, 0.8)
+                return Math.round((endTouch.pageY - startTouch.pageY) * 0.35)
             }
         }
     },
@@ -53,26 +59,34 @@ export default {
         }
     },
     methods: {
-        onTouchstart (e) {
+        _onTouchstart (e) {
             // e.preventDefault()
             this.isTouching = true
-            const { clientX, clientY, target } = e.targetTouches[0]
-            this.startTouch = { clientX, clientY, target }
+            const { pageX, pageY, target } = e.targetTouches[0]
+            this.startTouch = { pageX, pageY, target }
         },
-        onTouchmove (e) {
+        _onTouchmove (e) {
             // if (this.$el.scrollTop > 0 || !this.isTouching || this.isInfiniteLoading) {
             if (this.$el.scrollTop > 0 || !this.isTouching) {
                 return
             }
 
-            const { clientX, clientY, target } = e.targetTouches[0]
-            const endTouch = { clientX, clientY, target }
+            const { pageX, pageY, target } = e.targetTouches[0]
+            const endTouch = { pageX, pageY, target }
+            const startTouch = this.startTouch
 
-            if (endTouch.clientY - this.startTouch.clientY > 0) { // diff Y
+            if (endTouch.pageY - startTouch.pageY > 0) { // diff Y
                 e.preventDefault()
             }
 
-            const translateY = this.touchTranslate(this.startTouch, endTouch)
+            // 判断角度在45deg范围内，超出范围取消下拉刷新
+            const touchAngle = Math.atan2(Math.abs(endTouch.pageY - startTouch.pageY), Math.abs(endTouch.pageX - startTouch.pageX)) * 180 / Math.PI
+            if (touchAngle < this.touchAngle) {
+                this.translateY = 0
+                return
+            }
+
+            const translateY = this.touchTranslate(startTouch, endTouch)
             if (this._events.refresh) {
                 if (this.status === 'refreshing') {
                     this.translateY = translateY + this.ptrRefreshHeight
@@ -98,11 +112,11 @@ export default {
                 const diff = innerHeight - ptrRefreshHeight - ptrInfiniteHeight
                 if (diff <= outerHeight) {
                     // e.preventDefault()
-                    this.infinite()
+                    this._infinite()
                 }
             }
         },
-        onTouchend (e) {
+        _onTouchend (e) {
             this.isTouching = false
             if (this.status === 'refreshing') {
                 this.translateY = this.ptrRefreshHeight
@@ -110,15 +124,15 @@ export default {
             }
 
             if (this.translateY >= this.ptrRefreshHeight) { // trigger refresh
-                this.refresh()
+                this._refresh()
             } else {
                 this.status = 'pulldown'
                 this.translateY = 0
             }
         },
-        onScroll (e) {
+        _onScroll (e) {
             // if (this.isInfiniteLoading || nomore || this.status === 'refreshing') {
-            if (this.isInfiniteLoading || this.nomore) {
+            if (this.isInfiniteLoading || this.nomore || this.translateY > 0) {
                 return
             }
 
@@ -130,10 +144,10 @@ export default {
 
             const diff = innerHeight - outerHeight - scrollTop - ptrRefreshHeight
             if (diff >= 0 && diff < ptrInfiniteHeight) {
-                this.infinite()
+                this._infinite()
             }
         },
-        refresh () {
+        _refresh () {
             this.status = 'refreshing'
             this.translateY = this.ptrRefreshHeight
             this.nomore = false
@@ -148,7 +162,7 @@ export default {
                 }
             })
         },
-        infinite () {
+        _infinite () {
             this.isInfiniteLoading = true
             this.$emit('infinite', {
                 status: this.status,
@@ -159,7 +173,7 @@ export default {
                 }
             })
         },
-        throttle (fn, ms, ...args) {
+        _throttle (fn, ms, ...args) {
             if (this.timeout) {
                 return
             } else {

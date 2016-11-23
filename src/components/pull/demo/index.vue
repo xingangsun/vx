@@ -31,9 +31,8 @@ export default {
     },
     methods: {
         touchTranslate (startTouch, endTouch) {
-            // const diff = Math.pow(endTouch.clientY - startTouch.clientY, 0.8)
-            const diff = (endTouch.clientY - startTouch.clientY) * 0.3
-            // console.log(startTouch.clientY, endTouch.clientY, diff, this.$refs.ptrRefresh.parentElement.clientHeight)
+            // const diff = Math.pow(endTouch.pageY - startTouch.pageY, 0.8)
+            const diff = (endTouch.pageY - startTouch.pageY) * 0.3
             const ptrRefreshHeight = this.$refs.ptrRefresh.parentElement.clientHeight
             this.diff = diff <= ptrRefreshHeight ? diff : ptrRefreshHeight
             this.diff *= 0.75

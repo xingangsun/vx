@@ -1,11 +1,11 @@
 <template>
 <page-demo class="demo-index" :show-back="false">
-    <template slot="title">首页</template>
+    <template slot="title">前  端  之  巅</template>
     <pre>
-        都说城市套路深，不如回农村。
-        谁知农村路也滑，代码更复杂。
-
-        路漫漫其修远兮，吾将上下而求索。
+紧 跟 前 端 发 展
+共 享 一 流 技 术
+不 断 学 习 创 新
+攀 登 前 端 之 巅
     </pre>
 </page-demo>
 </template>
@@ -17,5 +17,9 @@ export default {
 </script>
 
 <style lang="sass">
-
+.demo-index {
+    pre {
+        text-align: center;
+    }
+}
 </style>

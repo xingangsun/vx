@@ -63,7 +63,7 @@
 
         <input-item label="简介" v-model="inputItemValue2" :multiline="3"
         :show-clear="true" :show-error="true" :show-count="true"
-        :maxlength="100" placeholder="请输入简介"></input-item>
+        :maxlength="10" placeholder="请输入简介"></input-item>
 
         <template slot="footer">还有其他属性和单行输入相同</template>
     </list>

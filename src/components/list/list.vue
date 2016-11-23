@@ -35,6 +35,8 @@ export default {
 .vx-list-body {
     position: relative;
     background-color: $bg-base;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
     
     &:before {
         @include border-pseudo($position: top);

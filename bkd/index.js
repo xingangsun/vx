@@ -9,9 +9,6 @@ nodemon({
     }
 }).on('crash', function () {
     console.error('nodemon crashed!')
-    setTimeout(() => {
-        process.exit(0)
-    }, 0)
 }).on('quit', function() {
     process.kill(process.pid)
 }).on('restart', function (files) {
@@ -19,3 +16,9 @@ nodemon({
     process.stdout.cursorTo(0)
     process.stdout.write(`bkd-server restarting due to [${files.map(file => file.replace(`${__dirname}/`, ''))}]`)
 })
+
+// 防止进程意外退出
+process.on('uncaughtException', function (err) {
+    // console.log(err);
+    // console.log(err.stack);
+});

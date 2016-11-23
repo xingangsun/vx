@@ -3,14 +3,15 @@ Pull(刷新加载)
 ### <a name="props">Props</a>
 |名称|类型|默认值|说明|
 |---|---|---|---|
+|touchAngle|`Number`|`45deg`|允许触发刷新的角度值。touchAngle为y轴与点(x,y)的<=90deg的夹角。在下拉过程中超出该范围则下拉被取消|
 |touchTranslate|`Function`<li>`startTouch`触摸起点<li>`endTouch`触摸终点|[返回触摸在Y轴分量*0.3](#touchTranslate-default)|触摸转换为下拉距离。使用该函数可以自定义触摸到下拉高度的转换，也可以自定义下拉指示器的效果(参见demo中的“变”字效果)|
 
 <a name="touchTranslate-default"></a>touchTranslate的默认值：
 
 ```
 function (startTouch, endTouch) {
-    // return Math.pow(endTouch.clientY - startTouch.clientY, 0.8)
-    return (endTouch.clientY - startTouch.clientY) * 0.3
+    // return Math.pow(endTouch.pageY - startTouch.pageY, 0.8)
+    return (endTouch.pageY - startTouch.pageY) * 0.3
 }
 ```
 

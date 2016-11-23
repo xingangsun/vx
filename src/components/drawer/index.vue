@@ -18,7 +18,7 @@ export default {
         position: { // 'left'(default), 'right', 'top', 'bottom'
             type: String,
             validator (position) {
-                return ['left', 'right', 'top', 'bottom'].indexOf(position) !== -1
+                return ['left', 'right', 'top', 'bottom'].indexOf(position) > -1
             },
             default: 'left'
         },
