@@ -8,7 +8,9 @@
         </navbar>
         <searchbar slot="subheader" v-model="keyword" placeholder="请输入关键字" :show-clear="true" btn="取消"></searchbar>
         <list>
-            <list-item v-for="n of 100">列表项目{{ n }}</list-item>
+            <div>
+                <list-item v-for="n of 100">列表项目{{ n }}</list-item>
+            </div>
         </list>
         <btn slot="footer" type="primary">标签栏</btn>
     </page>
