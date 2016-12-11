@@ -2,9 +2,9 @@
 <div class="vx-pull" :class="['vx-pull-' + status, { 'vx-pull-touching': isTouching, 
 'vx-pull-infinite-loading': isInfiniteLoading }]" 
 @touchstart="_onTouchstart($event)"
-@touchmove="_onTouchmove($event)"
+@touchmove="_throttle(_onTouchmove, 0, $event)"
 @touchend="_events.refresh ? _onTouchend($event) : undefined"
-@scroll="_events.infinite ? _onScroll($event) : undefined">
+@scroll="_events.infinite ? _throttle(_onScroll, 0, $event) : undefined">
 <!-- @touchmove.stop="_throttle(_onTouchmove, 30, $event)" -->
 <!-- @scroll.stop="_events.infinite ? _throttle(_onScroll, 30, $event) : undefined"> -->
     <div ref="inner" class="vx-pull-inner" 
